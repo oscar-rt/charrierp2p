@@ -21,13 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package charrierp2p.data;
+package charrierp2p.display;
+import charrierp2p.messaging.AppMessage;
 
 /**
  *
  * @author Oscar
  */
-public abstract class AppMessage{
-    
+
+public class CharrierConsole implements DisplayType{
+
+    @Override
+    public void display(AppMessage message) {
+        
+    }
     
 }

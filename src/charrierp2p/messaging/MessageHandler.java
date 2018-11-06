@@ -21,12 +21,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package charrierp2p.data;
+
+package charrierp2p.messaging;
+
+import charrierp2p.display.DisplayType;
+import charrierp2p.setup.AppVariables;
+import charrierp2p.setup.Setup;
 
 /**
  *
  * @author Oscar
  */
-public class Message extends AppMessage{
+public class MessageHandler {
+    
+    public static DisplayType displayType = null;
+    public static boolean serverHandler = true;
+    
+    public static void setupMH(Setup appSetup){
+        AppVariables appVariables = appSetup.appVariables;
+    }
+    
+    public static void setDisplay(DisplayType display){
+        displayType = display;
+    }
+    
+    public static void sendMessage(AppMessage message){
+    
+    }
     
 }
