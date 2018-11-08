@@ -21,28 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package charrierp2p.setup;
+package charrierp2p.display;
 
-import charrierp2p.data.User;
+import charrierp2p.messaging.MessageHandler;
+import charrierp2p.setup.Setup;
 
 /**
  *
  * @author Oscar
  */
-public class AppVariables {
+public class Source {
     
-    public boolean IS_SERVER;
-    public String ipAddress;
-    public int port;
-    public User user;
-    
-    public AppVariables(int test){
-        IS_SERVER = true;
+    public static DisplayType getDisplay(Setup appSetup, MessageHandler handler){    
+        if(appSetup.IS_GUI){
+            return null;
+        }
+        else{
+            CharrierConsole console = new CharrierConsole(appSetup, handler);
+            console.start();
+            return console;
+        }
     }
-    
-    public AppVariables(boolean server){
-        IS_SERVER = server;
-    }
-    
-    
 }

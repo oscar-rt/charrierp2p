@@ -21,19 +21,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package charrierp2p.data;
+package charrierp2p.managers;
+
+import charrierp2p.data.User;
+import charrierp2p.messaging.handlers.ServerHandler;
+import charrierp2p.setup.Setup;
+import java.net.Socket;
 
 /**
  *
  * @author Oscar
  */
-public class UserInfo {
+public class Connection extends Thread{
     
-    public String username;
-    //KEYPAIR GENERATED
+    User user;
+    Setup setupVariables;
+    ServerHandler handler;
+    public boolean running;
+    Socket connection;
     
-    public UserInfo(String username){
-        this.username = username;
+    public Connection(Socket connection, Setup setupVariables, ServerHandler handler){
+        this.connection = connection;
+        this.setupVariables = setupVariables;
+        this.handler = handler;
+        this.running = true;
     }
     
+    @Override 
+    public void run(){
+        
+        
+        
+        while(running){
+        //listen to input
+        
+        }
+    }
+    
+    public synchronized void finish(){
+        running = false;
+    }
 }

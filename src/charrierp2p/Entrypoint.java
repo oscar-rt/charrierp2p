@@ -1,7 +1,8 @@
 package charrierp2p;
 
+import charrierp2p.managers.ClientManager;
 import charrierp2p.setup.Setup;
-import charrierp2p.data.Time;
+import charrierp2p.managers.ServerManager;
 /**
  *
  * @author Oscar
@@ -19,12 +20,13 @@ public class Entrypoint {
     
     public static void main(String[] args){
         
-        Setup AppSetup = new Setup(A_TYPE, A_VERSION);
-        if(AppSetup.IS_GUI){
-            new GUIApplication(AppSetup);
+        Setup appSetup = new Setup(A_TYPE, A_VERSION);
+        
+        if(appSetup.appVariables.IS_SERVER){
+            new ServerManager(appSetup).start();
         }
         else{
-            new ConsoleApplication(AppSetup);
+            new ClientManager(appSetup).start();
         }
     }
     

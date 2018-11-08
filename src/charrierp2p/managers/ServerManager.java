@@ -21,47 +21,54 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package charrierp2p.display;
-import charrierp2p.messaging.AppMessage;
+package charrierp2p.managers;
+
+import charrierp2p.display.DisplayType;
+import charrierp2p.display.Source;
 import charrierp2p.messaging.MessageHandler;
+import charrierp2p.messaging.handlers.ServerHandler;
 import charrierp2p.setup.AppVariables;
 import charrierp2p.setup.Setup;
-import java.util.Scanner;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Oscar
  */
-
-public class CharrierConsole extends Thread implements DisplayType{
+public class ServerManager extends Thread{
     
-    Setup appSetup;
-    boolean running;
-    MessageHandler handler;
+    Setup setupVariables;
+    ServerHandler handler;
+    DisplayType display;
+    ConnectionsManager connections;
+    boolean running = true;
     
-    public CharrierConsole(Setup appSetup, MessageHandler handler){
-        this.appSetup = appSetup;
-        this.handler = handler;
-        running = true;
-    }
-    
-    @Override
-    public synchronized void display(AppMessage message) {
-        System.out.println(message.messageBody);
+    public ServerManager(Setup setupVariables){
+        this.setupVariables = setupVariables;
     }
     
     @Override
     public void run(){
-        AppVariables appVariables = appSetup.appVariables;
         
-        Scanner input = new Scanner(System.in);
-        while(running){
-            handler.sendMessageFromConsole(input.nextLine());
+        AppVariables appVariables = setupVariables.appVariables;
+        ServerSocket serverConnection;
+        
+        try {
+            serverConnection = new ServerSocket(appVariables.port);
+        } catch (IOException ex) {
+            serverConnection = null;
         }
-    }
-
-    @Override
-    public synchronized void finish() {
-        running = false;
+        
+        if(serverConnection != null){
+            
+            handler = new ServerHandler(setupVariables, this);
+            display = Source.getDisplay(setupVariables, handler);
+            handler.setDisplay(display);
+            connections = new ConnectionsManager(setupVariables, handler, serverConnection);
+            
+        }
     }
 }

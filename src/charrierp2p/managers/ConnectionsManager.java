@@ -21,28 +21,47 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package charrierp2p.setup;
 
-import charrierp2p.data.User;
+package charrierp2p.managers;
+import charrierp2p.messaging.handlers.ServerHandler;
+import charrierp2p.setup.Setup;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Oscar
  */
-public class AppVariables {
+public class ConnectionsManager extends Thread{
     
-    public boolean IS_SERVER;
-    public String ipAddress;
-    public int port;
-    public User user;
+    Setup setupVariables;
+    ServerHandler handler;
+    ServerSocket serverConnection;
     
-    public AppVariables(int test){
-        IS_SERVER = true;
+    public boolean running;
+
+    ConnectionsManager(Setup setupVariables, ServerHandler handler, ServerSocket serverConnection) {
+        this.setupVariables = setupVariables;
+        this.handler = handler;
+        this.serverConnection = serverConnection;
+        
+        this.running = true;
     }
     
-    public AppVariables(boolean server){
-        IS_SERVER = server;
+    @Override 
+    public void run(){
+        while(running){
+            try {
+                new Connection(serverConnection.accept(), setupVariables, handler);
+            } catch (IOException ex) {
+                System.out.println(ex.getLocalizedMessage());
+            }
+        }
     }
     
-    
+    public synchronized void finish(){
+        running = false;
+    }
 }

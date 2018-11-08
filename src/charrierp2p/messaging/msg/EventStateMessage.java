@@ -21,24 +21,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package charrierp2p.io;
+package charrierp2p.messaging.msg;
 
-import charrierp2p.setup.Setup;
+import charrierp2p.messaging.AppMessage;
 
 /**
  *
  * @author Oscar
  */
-public class ClientThread extends Thread{
-   
-    Setup setupVariables;
+
+public class EventStateMessage extends AppMessage{
     
-    public ClientThread(Setup setupVariables){
-        this.setupVariables = setupVariables;
+    String eventString;
+    int eventInteger;
+    
+    public EventStateMessage(){
+        super();
+        this.messageType = AppMessage.MessageTypes.EVENTSTATE;
     }
     
+    //init constructor
+    public EventStateMessage(String eventString, int eventInteger){
+        super();
+        this.messageType = AppMessage.MessageTypes.EVENTSTATE;
+    }
+
     @Override
-    public void run(){
-    
+    public String getConsoleDisplay() {
+        return null;
     }
 }

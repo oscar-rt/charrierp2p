@@ -23,10 +23,75 @@
  */
 package charrierp2p.setup;
 
+import java.util.Scanner;
+
 /**
  *
  * @author Oscar
  */
 public class ConsoleSetup {
     
+    //Static input object to be used throughout the console setup
+    private static Scanner input;
+    
+    static AppVariables getUserPreferences(){
+        
+        input = new Scanner(System.in);
+        
+        System.out.println("Welcome to Charrier P2P Setup, would you like to start a Server or a Client? [Server/Client]");
+        
+        String answer = input.nextLine();
+        
+        while(!answer.equals("Server") && !answer.equals("Client")){
+            printNoOptionTryAgain(answer, "[Server/Client]");
+            answer = input.nextLine();
+        }
+        
+        //now that we have determined if we want to make a server or a client we hand off the rest of the process to another function 
+        
+        boolean server = answer.equals("Server") ? true : false;
+        AppVariables appVariables = new AppVariables(server);
+        
+        getPortIP(appVariables);
+        
+        //clear reference to input object so it can be freed
+        input = null;
+        
+        return appVariables;
+    }
+
+    private static void getPortIP(AppVariables appVariables) {
+        
+        
+        //SET PORT
+        System.out.print("\nEnter the port that the server will use (e.g. 4747): ");
+        
+        String answer = input.nextLine();
+        
+        while(!checkPort(answer)){
+            System.out.print("\nPlease try again and enter a valid port number: ");
+            answer = input.nextLine();
+        }
+        
+        appVariables.port = Integer.parseInt(answer);
+        
+        //GET USER PROFILE 
+    }
+        
+    private static void printNoOptionTryAgain(String option, String availableOptions){    
+            System.out.println("No option " + option + ", please try again and choose a valid option. " + availableOptions);
+    }
+    
+    private static boolean checkPort(String value) {  
+     try {  
+         int port = Integer.parseInt(value);
+         if(port <= 65535){
+             return true;
+         }
+         return false;  
+      } 
+     catch (NumberFormatException e) {  
+         return false;  
+      }  
+    }
 }

@@ -21,27 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package charrierp2p;
-
-import charrierp2p.setup.AppVariables;
-import charrierp2p.setup.Setup;
+package charrierp2p.messaging.protocols;
 
 /**
  *
  * @author Oscar
  */
-public class GUIApplication {
-
-    GUIApplication(Setup AppSetup) {
-        Setup setupVariables = AppSetup;
-        AppVariables appVariables = AppSetup.appVariables;
-        
-        if(appVariables.IS_SERVER){
-            
-        }
-        else{
-            
-        }
-    }
+public class InitProtocol{
+    
+    
     
 }

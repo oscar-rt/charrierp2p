@@ -40,11 +40,11 @@ public class Setup {
         
         if(IS_GUI){
             //prompt user with GUI !!
-            appVariables = new AppVariables(0);
+            appVariables = null;
         }
         else{
             //prompt user through console !!
-            appVariables = new AppVariables(0);
+            appVariables = ConsoleSetup.getUserPreferences();
         }
     }
 }

@@ -21,28 +21,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package charrierp2p.setup;
+package charrierp2p.managers;
 
-import charrierp2p.data.User;
+import charrierp2p.setup.Setup;
 
 /**
  *
  * @author Oscar
  */
-public class AppVariables {
+public class ClientManager extends Thread{
+   
+    Setup setupVariables;
     
-    public boolean IS_SERVER;
-    public String ipAddress;
-    public int port;
-    public User user;
-    
-    public AppVariables(int test){
-        IS_SERVER = true;
+    public ClientManager(Setup setupVariables){
+        this.setupVariables = setupVariables;
     }
     
-    public AppVariables(boolean server){
-        IS_SERVER = server;
+    @Override
+    public void run(){
+        
     }
-    
-    
 }

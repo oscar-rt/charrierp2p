@@ -31,5 +31,5 @@ import charrierp2p.messaging.AppMessage;
 public interface DisplayType {
     
     public void display(AppMessage message);
-    
+    public void finish();
 }

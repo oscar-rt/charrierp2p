@@ -21,27 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package charrierp2p;
-
-import charrierp2p.setup.Setup;
-import charrierp2p.setup.AppVariables;
+package charrierp2p.data;
 
 /**
  *
  * @author Oscar
  */
-public class ConsoleApplication {
+public class User {
     
-    ConsoleApplication(Setup AppSetup) {
-        Setup setupVariables = AppSetup;
-        AppVariables appVariables = AppSetup.appVariables;
-        
-        if(appVariables.IS_SERVER){
-            
-        }
-        else{
-            
-        }
+    String username;
+    String role;
+    String textcolor;
+    
+    public User(String username){
+        this.username = username;
     }
-    
 }

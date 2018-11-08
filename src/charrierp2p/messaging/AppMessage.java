@@ -23,11 +23,25 @@
  */
 package charrierp2p.messaging;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Oscar
  */
-public abstract class AppMessage{
+public abstract class AppMessage implements Serializable{
     
+    public String messageBody;
+    public MessageTypes messageType;
+    public String timeSent;
+    public String timeArrived;
     
+    public AppMessage(){
+    }
+    
+    public abstract String getConsoleDisplay();
+    
+    public enum MessageTypes{
+        _TEST, COMMUNICATION, EVENTSTATE, SERVER, LOCAL
+    };
 }

@@ -27,26 +27,23 @@ package charrierp2p.messaging;
 import charrierp2p.display.DisplayType;
 import charrierp2p.setup.AppVariables;
 import charrierp2p.setup.Setup;
+import java.util.HashMap;
 
 /**
  *
  * @author Oscar
  */
-public class MessageHandler {
+public abstract class MessageHandler {
     
-    public static DisplayType displayType = null;
-    public static boolean serverHandler = true;
+    public DisplayType displayType = null;
     
-    public static void setupMH(Setup appSetup){
+    public MessageHandler(Setup appSetup){
         AppVariables appVariables = appSetup.appVariables;
     }
     
-    public static void setDisplay(DisplayType display){
+    public void setDisplay(DisplayType display){
         displayType = display;
     }
     
-    public static void sendMessage(AppMessage message){
-    
-    }
-    
+    public abstract void sendMessageFromConsole(String message);
 }

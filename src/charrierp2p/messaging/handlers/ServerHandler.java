@@ -21,28 +21,49 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package charrierp2p.setup;
+package charrierp2p.messaging.handlers;
 
 import charrierp2p.data.User;
+import charrierp2p.managers.ServerManager;
+import charrierp2p.messaging.MessageHandler;
+import charrierp2p.messaging.AppMessage;
+import charrierp2p.setup.Setup;
+import java.io.ObjectOutputStream;
+import java.util.HashMap;
 
 /**
  *
  * @author Oscar
  */
-public class AppVariables {
+public class ServerHandler extends MessageHandler{
     
-    public boolean IS_SERVER;
-    public String ipAddress;
-    public int port;
-    public User user;
+    HashMap <User, ObjectOutputStream> outputStreams;
+    ServerManager manager;
     
-    public AppVariables(int test){
-        IS_SERVER = true;
+    public ServerHandler(Setup appSetup, ServerManager manager){
+        super(appSetup);
+        outputStreams = new HashMap<>();
+        this.manager = manager;
+    }
+
+    @Override
+    public void sendMessageFromConsole(String message){
+        
+    }
+
+    public void sendServerMessage(String message) {
+        
     }
     
-    public AppVariables(boolean server){
-        IS_SERVER = server;
+    public void routeMessage(AppMessage message){
+        
     }
     
+    public void addOutputStream(User user, ObjectOutputStream output){
+        outputStreams.put(user, output);
+    }
     
+    public void removeOutputStream(User user){
+        outputStreams.remove(user);
+    }
 }
