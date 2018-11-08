@@ -26,7 +26,12 @@ package charrierp2p.managers;
 import charrierp2p.data.User;
 import charrierp2p.messaging.handlers.ServerHandler;
 import charrierp2p.setup.Setup;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -50,12 +55,21 @@ public class Connection extends Thread{
     @Override 
     public void run(){
         
-        
+        ObjectInputStream inputStream;
+        ObjectOutputStream outputStream;
+        try{
+            inputStream = new ObjectInputStream(connection.getInputStream());
+            outputStream = new ObjectOutputStream(connection.getOutputStream());
+        } catch (IOException ex) {
+           
+        }
         
         while(running){
         //listen to input
         
         }
+        
+        
     }
     
     public synchronized void finish(){

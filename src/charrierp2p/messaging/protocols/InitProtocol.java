@@ -23,12 +23,20 @@
  */
 package charrierp2p.messaging.protocols;
 
+import charrierp2p.messaging.msg.EventStateMessage;
+
 /**
  *
  * @author Oscar
  */
 public class InitProtocol{
     
+    public boolean completed;
+    public boolean failed;
     
-    
+    static int limit = 5;
+
+    public InitProtocol(EventStateMessage message, boolean server){
+        
+    }
 }

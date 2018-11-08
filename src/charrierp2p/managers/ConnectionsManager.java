@@ -46,7 +46,6 @@ public class ConnectionsManager extends Thread{
         this.setupVariables = setupVariables;
         this.handler = handler;
         this.serverConnection = serverConnection;
-        
         this.running = true;
     }
     
@@ -55,7 +54,8 @@ public class ConnectionsManager extends Thread{
         while(running){
             try {
                 new Connection(serverConnection.accept(), setupVariables, handler);
-            } catch (IOException ex) {
+            } 
+            catch (IOException ex) {
                 System.out.println(ex.getLocalizedMessage());
             }
         }

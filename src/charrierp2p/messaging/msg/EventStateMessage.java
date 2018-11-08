@@ -50,4 +50,12 @@ public class EventStateMessage extends AppMessage{
     public String getConsoleDisplay() {
         return null;
     }
+    
+    public String getEventString(){
+        return eventString;
+    }
+    
+    public int getEventInteger(){
+        return eventInteger;
+    }
 }
