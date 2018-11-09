@@ -54,17 +54,18 @@ public class ClientManager extends Thread{
         
         try {
             serverConnection = new Socket(appVariables.ipAddress, appVariables.port);
+            System.out.println("SERVERCONNECT SUCCESS");
         } catch (IOException ex) {
             ex.printStackTrace();
             serverConnection = null;
         }
         
         if(serverConnection != null){
-            
             handler = new ClientHandler(setupVariables, this);
             display = Source.getDisplay(setupVariables, handler);
             handler.setDisplay(display);
             listener = new Listener(setupVariables, handler, serverConnection);
+            listener.start();
         }
     }
     
