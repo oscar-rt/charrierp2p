@@ -23,7 +23,10 @@
  */
 package charrierp2p.messaging.protocols;
 
+import charrierp2p.data.User;
 import charrierp2p.messaging.msg.EventStateMessage;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 /**
  *
@@ -33,10 +36,34 @@ public class InitProtocol{
     
     public boolean completed;
     public boolean failed;
-    
+    private ObjectInputStream inputStream;
+    private ObjectOutputStream outputStream;
+    private User newUser;
     static int limit = 5;
 
-    public InitProtocol(EventStateMessage message, boolean server){
+    public InitProtocol(boolean server, ObjectInputStream inputStream, ObjectOutputStream outputStream){
         
+        completed = false;
+        failed = false;
+        
+        if(server){
+            runServerHandshake();
+        }
+        else{
+            runClientHandshake();
+        }
     }
+
+    private void runServerHandshake() {
+        System.out.println("SERVER HELLOS!");
+    }
+
+    private void runClientHandshake() {
+        System.out.println("CLIENT HELLOS!");
+    }
+    
+    public User getNewUser(){
+        return newUser;
+    }
+
 }

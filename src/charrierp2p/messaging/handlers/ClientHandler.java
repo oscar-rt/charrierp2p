@@ -21,28 +21,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package charrierp2p.messaging;
+package charrierp2p.messaging.handlers;
 
-import java.io.Serializable;
+import charrierp2p.data.User;
+import charrierp2p.managers.ClientManager;
+import charrierp2p.messaging.MessageHandler;
+import charrierp2p.setup.Setup;
+import java.io.ObjectOutputStream;
 
 /**
  *
  * @author Oscar
  */
-public abstract class AppMessage implements Serializable{
+public class ClientHandler extends MessageHandler{
     
-    public String messageBody;
-    public MessageTypes messageType;
-    public String timeSent;
-    public String timeArrived;
+    ClientManager manager;
+    ObjectOutputStream outputStream;
     
-    public AppMessage(){
+    public ClientHandler(Setup appSetup, ClientManager manager) {
+        super(appSetup);
+        this.manager = manager;
+    }
+
+    @Override
+    public void sendMessageFromConsole(String message) {
+        
+    }
+
+    @Override
+    public void sendLocalMessage(String message, User user) {
         
     }
     
-    public abstract String getConsoleDisplay();
+    public void interpretMessage(){
+        
+    }
     
-    public enum MessageTypes{
-        _TEST, COMMUNICATION, EVENTSTATE, SERVER, LOCAL
-    };
+    public void setServerOutputStream(ObjectOutputStream outputStream){
+        this.outputStream = outputStream;
+    }
 }

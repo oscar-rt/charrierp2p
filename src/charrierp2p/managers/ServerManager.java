@@ -44,7 +44,6 @@ public class ServerManager extends Thread{
     ServerHandler handler;
     DisplayType display;
     ConnectionsManager connections;
-    boolean running = true;
     
     public ServerManager(Setup setupVariables){
         this.setupVariables = setupVariables;
@@ -70,5 +69,10 @@ public class ServerManager extends Thread{
             connections = new ConnectionsManager(setupVariables, handler, serverConnection);
             
         }
+    }
+    
+    public void finish(){
+        display.finish();
+        connections.finish();
     }
 }

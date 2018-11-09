@@ -21,28 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package charrierp2p.messaging;
+package charrierp2p.messaging.msg;
 
-import java.io.Serializable;
+import charrierp2p.messaging.AppMessage;
 
 /**
  *
  * @author Oscar
  */
-public abstract class AppMessage implements Serializable{
+public class LocalMessage extends AppMessage{
     
-    public String messageBody;
-    public MessageTypes messageType;
-    public String timeSent;
-    public String timeArrived;
-    
-    public AppMessage(){
-        
+    public LocalMessage(String localBody){
+        this.messageBody = localBody;
     }
     
-    public abstract String getConsoleDisplay();
+    @Override
+    public String getConsoleDisplay() {
+        return "// " + this.messageBody; 
+    } 
     
-    public enum MessageTypes{
-        _TEST, COMMUNICATION, EVENTSTATE, SERVER, LOCAL
-    };
 }

@@ -27,6 +27,7 @@ import charrierp2p.messaging.handlers.ServerHandler;
 import charrierp2p.setup.Setup;
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,13 +40,14 @@ public class ConnectionsManager extends Thread{
     Setup setupVariables;
     ServerHandler handler;
     ServerSocket serverConnection;
-    
+    ArrayList<Connection> connectionsArray;
     public boolean running;
 
     ConnectionsManager(Setup setupVariables, ServerHandler handler, ServerSocket serverConnection) {
         this.setupVariables = setupVariables;
         this.handler = handler;
         this.serverConnection = serverConnection;
+        this.connectionsArray = new ArrayList<>();
         this.running = true;
     }
     
@@ -53,15 +55,18 @@ public class ConnectionsManager extends Thread{
     public void run(){
         while(running){
             try {
-                new Connection(serverConnection.accept(), setupVariables, handler);
+                new Connection(serverConnection.accept(), setupVariables, handler, connectionsArray);
             } 
             catch (IOException ex) {
-                System.out.println(ex.getLocalizedMessage());
+                //There was an issue
             }
         }
     }
     
     public synchronized void finish(){
         running = false;
+        for(int i = 0; i < connectionsArray.size(); i++){
+            connectionsArray.get(i).finish();
+        }
     }
 }

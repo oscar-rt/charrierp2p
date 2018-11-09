@@ -23,7 +23,13 @@
  */
 package charrierp2p.managers;
 
+import charrierp2p.display.DisplayType;
+import charrierp2p.display.Source;
+import charrierp2p.messaging.handlers.ClientHandler;
+import charrierp2p.setup.AppVariables;
 import charrierp2p.setup.Setup;
+import java.io.IOException;
+import java.net.Socket;
 
 /**
  *
@@ -32,6 +38,9 @@ import charrierp2p.setup.Setup;
 public class ClientManager extends Thread{
    
     Setup setupVariables;
+    ClientHandler handler;
+    DisplayType display;
+    Listener listener;
     
     public ClientManager(Setup setupVariables){
         this.setupVariables = setupVariables;
@@ -39,6 +48,27 @@ public class ClientManager extends Thread{
     
     @Override
     public void run(){
+        
+        AppVariables appVariables = setupVariables.appVariables;
+        Socket serverConnection;
+        
+        try {
+            serverConnection = new Socket(appVariables.ipAddress, appVariables.port);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            serverConnection = null;
+        }
+        
+        if(serverConnection != null){
+            
+            handler = new ClientHandler(setupVariables, this);
+            display = Source.getDisplay(setupVariables, handler);
+            handler.setDisplay(display);
+            listener = new Listener(setupVariables, handler, serverConnection);
+        }
+    }
+    
+    public void finish(){
         
     }
 }

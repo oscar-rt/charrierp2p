@@ -52,24 +52,28 @@ public class ConsoleSetup {
         boolean server = answer.equals("Server") ? true : false;
         AppVariables appVariables = new AppVariables(server);
         
-        getPortIP(appVariables);
+        if(server){
+            getPortIPForServer(appVariables);
+        }
+        else{
+            getPortIPForClient(appVariables);
+        }
         
         //clear reference to input object so it can be freed
         input = null;
-        
+        System.out.println("\n");
         return appVariables;
     }
 
-    private static void getPortIP(AppVariables appVariables) {
-        
+    private static void getPortIPForServer(AppVariables appVariables) {
         
         //SET PORT
-        System.out.print("\nEnter the port that the server will use (e.g. 4747): ");
+        System.out.print("Enter the port that the server will use (e.g. 4747): ");
         
         String answer = input.nextLine();
         
         while(!checkPort(answer)){
-            System.out.print("\nPlease try again and enter a valid port number: ");
+            System.out.print("Please try again and enter a valid port number: ");
             answer = input.nextLine();
         }
         
@@ -77,9 +81,40 @@ public class ConsoleSetup {
         
         //GET USER PROFILE 
     }
+    
+    private static void getPortIPForClient(AppVariables appVariables) {
+
+        //SET IP
+        System.out.print("Enter the ip that the client will connect to (e.g. 127.0.0.1): ");
+        
+        String answer = input.nextLine();
+        
+        while(!checkIP(answer)){
+            System.out.print("Please try again and enter a valid ip address: ");
+            answer = input.nextLine();
+        }
+        
+        appVariables.ipAddress = answer;
+        
+        //SET PORT
+        System.out.print("Enter the port that the client will connect to (e.g. 4747): ");
+        
+        answer = input.nextLine();
+        
+        while(!checkPort(answer)){
+            System.out.print("Please try again and enter a valid port number: ");
+            answer = input.nextLine();
+        }
+        
+        appVariables.port = Integer.parseInt(answer);
+    }
         
     private static void printNoOptionTryAgain(String option, String availableOptions){    
             System.out.println("No option " + option + ", please try again and choose a valid option. " + availableOptions);
+    }
+    
+    private static boolean checkIP(String answer) {
+        return answer.matches("\\b\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\b");
     }
     
     private static boolean checkPort(String value) {  
@@ -94,4 +129,6 @@ public class ConsoleSetup {
          return false;  
       }  
     }
+
+
 }

@@ -23,47 +23,44 @@
  */
 package charrierp2p.managers;
 
-import charrierp2p.data.User;
-import charrierp2p.messaging.handlers.ServerHandler;
+import charrierp2p.messaging.handlers.ClientHandler;
 import charrierp2p.messaging.protocols.InitProtocol;
 import charrierp2p.setup.Setup;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author Oscar
  */
-public class Connection extends Thread{
+public class Listener extends Thread{
     
-    User user;
     Setup setupVariables;
-    ServerHandler handler;
-    public boolean running;
-    ArrayList<Connection> connectionsA;
-    Socket connection;
+    ClientHandler handler;
+    Socket serverConnection;
+    boolean running;
+
     
-    public Connection(Socket connection, Setup setupVariables, ServerHandler handler, ArrayList<Connection> connectionsA){
-        this.connection = connection;
+    
+    public Listener( Setup setupVariables, ClientHandler handler, Socket serverConnection){
+        
         this.setupVariables = setupVariables;
         this.handler = handler;
-        this.running = true;
-        this.connectionsA = connectionsA;
+        this.serverConnection = serverConnection;
+        running = true;
     }
     
     @Override 
     public void run(){
         
-        ObjectInputStream inputStream = null;
         ObjectOutputStream outputStream = null;
+        ObjectInputStream inputStream = null;
+        
         try{
-            inputStream = new ObjectInputStream(connection.getInputStream());
-            outputStream = new ObjectOutputStream(connection.getOutputStream());
+            inputStream = new ObjectInputStream(serverConnection.getInputStream());
+            outputStream = new ObjectOutputStream(serverConnection.getOutputStream());
         } catch (IOException ex) {
             running = false;
         }
@@ -74,15 +71,13 @@ public class Connection extends Thread{
         }
         
         while(running){
-        //listen to input
-            
         }
     }
     
     public synchronized void finish(){
         if(running){
-            running = false;
-        
+        running = false;
+            
         }
     }
 }

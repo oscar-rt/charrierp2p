@@ -22,6 +22,7 @@
  * THE SOFTWARE.
  */
 package charrierp2p.display;
+import charrierp2p.data.Time;
 import charrierp2p.messaging.AppMessage;
 import charrierp2p.messaging.MessageHandler;
 import charrierp2p.setup.AppVariables;
@@ -47,14 +48,19 @@ public class CharrierConsole extends Thread implements DisplayType{
     
     @Override
     public synchronized void display(AppMessage message) {
-        System.out.println(message.messageBody);
+        if(message.getConsoleDisplay() != null){
+            System.out.println(message.getConsoleDisplay());
+        }
     }
     
     @Override
     public void run(){
         AppVariables appVariables = appSetup.appVariables;
-        
         Scanner input = new Scanner(System.in);
+        
+        String mngr = appSetup.appVariables.IS_SERVER ? "server" : "client";
+        handler.sendLocalMessage("Console " + mngr + " started @ " + Time.current64Time(), null);
+        
         while(running){
             handler.sendMessageFromConsole(input.nextLine());
         }

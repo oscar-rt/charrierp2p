@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/D:/Projects/Java/NetBeansProjects/charrierp2p/src/charrierp2p/messaging/handlers/ServerHandler.java</file>
+            <file>file:/D:/Projects/Java/NetBeansProjects/charrierp2p/src/charrierp2p/managers/Connection.java</file>
+            <file>file:/D:/Projects/Java/NetBeansProjects/charrierp2p/src/charrierp2p/display/Source.java</file>
+            <file>file:/D:/Projects/Java/NetBeansProjects/charrierp2p/src/charrierp2p/data/Time.java</file>
+            <file>file:/D:/Projects/Java/NetBeansProjects/charrierp2p/src/charrierp2p/Entrypoint.java</file>
+            <file>file:/D:/Projects/Java/NetBeansProjects/charrierp2p/src/charrierp2p/display/DisplayType.java</file>
+            <file>file:/D:/Projects/Java/NetBeansProjects/charrierp2p/src/charrierp2p/messaging/handlers/ClientHandler.java</file>
+            <file>file:/D:/Projects/Java/NetBeansProjects/charrierp2p/src/charrierp2p/managers/Listener.java</file>
+            <file>file:/D:/Projects/Java/NetBeansProjects/charrierp2p/src/charrierp2p/setup/Setup.java</file>
+            <file>file:/D:/Projects/Java/NetBeansProjects/charrierp2p/src/charrierp2p/managers/ServerManager.java</file>
+            <file>file:/D:/Projects/Java/NetBeansProjects/charrierp2p/src/charrierp2p/data/User.java</file>
+            <file>file:/D:/Projects/Java/NetBeansProjects/charrierp2p/src/charrierp2p/messaging/msg/LocalMessage.java</file>
+            <file>file:/D:/Projects/Java/NetBeansProjects/charrierp2p/src/charrierp2p/messaging/msg/ComMessage.java</file>
+            <file>file:/D:/Projects/Java/NetBeansProjects/charrierp2p/src/charrierp2p/managers/ConnectionsManager.java</file>
+            <file>file:/D:/Projects/Java/NetBeansProjects/charrierp2p/src/charrierp2p/setup/AppVariables.java</file>
+            <file>file:/D:/Projects/Java/NetBeansProjects/charrierp2p/src/charrierp2p/setup/ConsoleSetup.java</file>
+            <file>file:/D:/Projects/Java/NetBeansProjects/charrierp2p/src/charrierp2p/messaging/AppMessage.java</file>
+            <file>file:/D:/Projects/Java/NetBeansProjects/charrierp2p/src/charrierp2p/messaging/MessageHandler.java</file>
+            <file>file:/D:/Projects/Java/NetBeansProjects/charrierp2p/src/charrierp2p/display/CharrierConsole.java</file>
+            <file>file:/D:/Projects/Java/NetBeansProjects/charrierp2p/src/charrierp2p/managers/ClientManager.java</file>
+            <file>file:/D:/Projects/Java/NetBeansProjects/charrierp2p/src/charrierp2p/messaging/protocols/InitProtocol.java</file>
+            <file>file:/D:/Projects/Java/NetBeansProjects/charrierp2p/src/charrierp2p/messaging/msg/EventStateMessage.java</file>
+        </group>
+    </open-files>
+</project-private>
