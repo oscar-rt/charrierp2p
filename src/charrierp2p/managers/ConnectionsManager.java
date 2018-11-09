@@ -55,10 +55,11 @@ public class ConnectionsManager extends Thread{
     public void run(){
         while(running){
             try {
-                new Connection(serverConnection.accept(), setupVariables, handler, connectionsArray);
+                new Connection(serverConnection.accept(), setupVariables, handler, connectionsArray).start();
             } 
             catch (IOException ex) {
                 //There was an issue
+                ex.printStackTrace();
             }
         }
     }

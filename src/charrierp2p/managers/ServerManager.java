@@ -30,7 +30,9 @@ import charrierp2p.messaging.handlers.ServerHandler;
 import charrierp2p.setup.AppVariables;
 import charrierp2p.setup.Setup;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
+import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -62,12 +64,16 @@ public class ServerManager extends Thread{
         }
         
         if(serverConnection != null){
-            
             handler = new ServerHandler(setupVariables, this);
             display = Source.getDisplay(setupVariables, handler);
             handler.setDisplay(display);
+            try {
+                handler.sendLocalMessage("Server started locallly on " + InetAddress.getLocalHost().getHostAddress(), null);
+            } catch (UnknownHostException ex) {
+                Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
+            }
             connections = new ConnectionsManager(setupVariables, handler, serverConnection);
-            
+            connections.start();
         }
     }
     

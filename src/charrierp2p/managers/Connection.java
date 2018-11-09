@@ -45,15 +45,15 @@ public class Connection extends Thread{
     Setup setupVariables;
     ServerHandler handler;
     public boolean running;
-    ArrayList<Connection> connectionsA;
+    ArrayList<Connection> connectionsArray;
     Socket connection;
     
-    public Connection(Socket connection, Setup setupVariables, ServerHandler handler, ArrayList<Connection> connectionsA){
+    public Connection(Socket connection, Setup setupVariables, ServerHandler handler, ArrayList<Connection> connectionsArray){
         this.connection = connection;
         this.setupVariables = setupVariables;
         this.handler = handler;
         this.running = true;
-        this.connectionsA = connectionsA;
+        this.connectionsArray = connectionsArray;
     }
     
     @Override 
@@ -61,10 +61,14 @@ public class Connection extends Thread{
         
         ObjectInputStream inputStream = null;
         ObjectOutputStream outputStream = null;
+            
+        System.out.println("WE OUT HERE");
         try{
-            inputStream = new ObjectInputStream(connection.getInputStream());
             outputStream = new ObjectOutputStream(connection.getOutputStream());
+            System.out.println("MAKINGINPUT");
+            inputStream = new ObjectInputStream(connection.getInputStream());
         } catch (IOException ex) {
+            ex.printStackTrace();
             running = false;
         }
         
