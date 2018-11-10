@@ -61,19 +61,17 @@ public class Listener extends Thread{
         try{
             outputStream = new ObjectOutputStream(serverConnection.getOutputStream());
             inputStream = new ObjectInputStream(serverConnection.getInputStream());
-            System.out.println("YES");
         } catch (IOException ex) {
             running = false;
-            System.out.println("NO");
         }
         
         if(running){
-            System.out.println("WELL?");
-            InitProtocol initConnection = new InitProtocol(false, inputStream, outputStream);
+            InitProtocol initConnection = new InitProtocol(setupVariables.appVariables.user, false, inputStream, outputStream);
             running = (initConnection.completed && !initConnection.failed);
         }
         
         while(running){
+            
         }
     }
     

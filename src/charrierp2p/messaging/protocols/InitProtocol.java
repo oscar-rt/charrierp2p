@@ -25,8 +25,11 @@ package charrierp2p.messaging.protocols;
 
 import charrierp2p.data.User;
 import charrierp2p.messaging.msg.EventStateMessage;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -39,10 +42,11 @@ public class InitProtocol{
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
     private User newUser;
-    static int limit = 5;
-
-    public InitProtocol(boolean server, ObjectInputStream inputStream, ObjectOutputStream outputStream){
+    
+    public InitProtocol(User user, boolean server, ObjectInputStream inputStream, ObjectOutputStream outputStream){
         
+        this.inputStream = inputStream;
+        this.outputStream = outputStream;
         completed = false;
         failed = false;
         
@@ -50,20 +54,63 @@ public class InitProtocol{
             runServerHandshake();
         }
         else{
+            newUser = user;
             runClientHandshake();
         }
     }
 
     private void runServerHandshake() {
-        System.out.println("SERVER HELLOS!");
+        try {
+            
+            
+            EventStateMessage firstContact = (EventStateMessage) inputStream.readObject();
+            if("INIT_001".equals(firstContact.getEventString())
+            && firstContact.getEventInteger() == 1){
+                firstContact.update("INIT_001_STAMPED", 2, newUser);
+                outputStream.writeObject(firstContact);
+                firstContact = (EventStateMessage) inputStream.readObject();
+                    if("INIT_001_STAMPED_CONFIRMED".equals(firstContact.getEventString())
+                    && firstContact.getEventInteger() == 3){
+                        newUser = firstContact.getUserData();
+                        completed = true;
+                    }
+                    else{
+                        failed = true;
+                    }
+            }
+            else{
+                failed = true;
+            }
+            
+        } catch (IOException ex) {
+            Logger.getLogger(InitProtocol.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(InitProtocol.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void runClientHandshake() {
-        System.out.println("CLIENT HELLOS!");
+        try {
+            EventStateMessage firstContact = new EventStateMessage("INIT_001", 1, newUser);
+            outputStream.writeObject(firstContact);
+            firstContact = (EventStateMessage) inputStream.readObject();
+            firstContact.update(firstContact.getEventString() + "_CONFIRMED",firstContact.getEventInteger() + 1, newUser);
+            outputStream.writeObject(firstContact);
+            
+            this.completed = true;
+            
+        } catch (IOException ex) {
+            Logger.getLogger(InitProtocol.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(InitProtocol.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public User getNewUser(){
-        return newUser;
+        if(completed && !failed){
+            return newUser;
+        }
+        return null;
     }
 
 }

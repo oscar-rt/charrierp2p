@@ -23,6 +23,7 @@
  */
 package charrierp2p.messaging.msg;
 
+import charrierp2p.data.User;
 import charrierp2p.messaging.AppMessage;
 
 /**
@@ -32,8 +33,10 @@ import charrierp2p.messaging.AppMessage;
 
 public class EventStateMessage extends AppMessage{
     
+
     String eventString;
     int eventInteger;
+    User userData;
     
     public EventStateMessage(){
         super();
@@ -41,14 +44,23 @@ public class EventStateMessage extends AppMessage{
     }
     
     //init constructor
-    public EventStateMessage(String eventString, int eventInteger){
+    public EventStateMessage(String eventString, int eventInteger, User userData){
         super();
         this.messageType = AppMessage.MessageTypes.EVENTSTATE;
+        this.eventString = eventString;
+        this.eventInteger = eventInteger;
+        this.userData = userData;
     }
 
     @Override
     public String getConsoleDisplay() {
         return null;
+    }
+    
+    public void update(String eventString, int eventInteger, User userData){
+        this.eventString = eventString;
+        this.eventInteger = eventInteger;
+        this.userData = userData;
     }
     
     public String getEventString(){
@@ -57,5 +69,15 @@ public class EventStateMessage extends AppMessage{
     
     public int getEventInteger(){
         return eventInteger;
+    }
+    
+    public User getUserData(){
+        return userData;
+    }
+    
+    public void testPrint(){
+        System.out.println("\n=======ESM!=======");
+        System.out.println("ES: " + eventString);
+        System.out.println("EI: " + eventInteger);
     }
 }

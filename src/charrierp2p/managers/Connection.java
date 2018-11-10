@@ -62,10 +62,8 @@ public class Connection extends Thread{
         ObjectInputStream inputStream = null;
         ObjectOutputStream outputStream = null;
             
-        System.out.println("WE OUT HERE");
         try{
             outputStream = new ObjectOutputStream(connection.getOutputStream());
-            System.out.println("MAKINGINPUT");
             inputStream = new ObjectInputStream(connection.getInputStream());
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -73,8 +71,15 @@ public class Connection extends Thread{
         }
         
         if(running){
-            InitProtocol initConnection = new InitProtocol(true, inputStream, outputStream);
-            running = (initConnection.completed && !initConnection.failed);
+            InitProtocol initConnection = new InitProtocol(null, true, inputStream, outputStream);
+            if(initConnection.completed && !initConnection.failed){
+                running = true;
+                user = initConnection.getNewUser();
+                //DO SHIT
+            }
+            else{
+                running = false;
+            }
         }
         
         while(running){
