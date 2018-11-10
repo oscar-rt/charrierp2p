@@ -42,6 +42,7 @@ public class InitProtocol{
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
     private User newUser;
+    private User serverUser;
     
     public InitProtocol(User user, boolean server, ObjectInputStream inputStream, ObjectOutputStream outputStream){
         
@@ -95,6 +96,7 @@ public class InitProtocol{
             outputStream.writeObject(firstContact);
             firstContact = (EventStateMessage) inputStream.readObject();
             firstContact.update(firstContact.getEventString() + "_CONFIRMED",firstContact.getEventInteger() + 1, newUser);
+            
             outputStream.writeObject(firstContact);
             
             this.completed = true;
@@ -109,6 +111,13 @@ public class InitProtocol{
     public User getNewUser(){
         if(completed && !failed){
             return newUser;
+        }
+        return null;
+    }
+    
+    public User getServerUser(){
+        if(completed && !failed){
+            return serverUser;
         }
         return null;
     }

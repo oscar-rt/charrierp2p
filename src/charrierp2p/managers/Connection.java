@@ -75,7 +75,7 @@ public class Connection extends Thread{
             if(initConnection.completed && !initConnection.failed){
                 running = true;
                 user = initConnection.getNewUser();
-                //DO SHIT
+                handler.addOutputStream(user, outputStream);
             }
             else{
                 running = false;
@@ -91,7 +91,7 @@ public class Connection extends Thread{
     public synchronized void finish(){
         if(running){
             running = false;
-        
+            handler.removeOutputStream(user);
         }
     }
 }

@@ -21,7 +21,7 @@ public class Entrypoint {
     public static void main(String[] args){
         
         Setup appSetup = new Setup(A_TYPE, A_VERSION);
-        System.out.println(appSetup.appVariables.IS_SERVER + " IS SERVER + " + appSetup.appVariables.ipAddress + " IP ADDRESS + " + appSetup.appVariables.port + " PORT");
+        
         if(appSetup.appVariables.IS_SERVER){
             new ServerManager(appSetup).start();
         }

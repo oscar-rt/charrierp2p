@@ -27,10 +27,16 @@ import charrierp2p.data.User;
 import charrierp2p.managers.ServerManager;
 import charrierp2p.messaging.MessageHandler;
 import charrierp2p.messaging.AppMessage;
+import charrierp2p.messaging.msg.ComMessage;
 import charrierp2p.messaging.msg.LocalMessage;
 import charrierp2p.setup.Setup;
+import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.crypto.SealedObject;
 
 /**
  *
@@ -56,8 +62,12 @@ public class ServerHandler extends MessageHandler{
         
     }
     
-    public synchronized void routeMessage(User user, AppMessage message){
+    public synchronized void routeMessage(User user, SealedObject sealedMessage){
+        AppMessage message = this.appSetup.appVariables.getSealedMessage(sealedMessage);
         
+        if(message != null && message.messageType == AppMessage.MessageTypes.COMMUNICATION){
+            ComMessage comMessage = (ComMessage) message;
+        }
     }
     
     public synchronized void addOutputStream(User user, ObjectOutputStream output){
@@ -65,7 +75,9 @@ public class ServerHandler extends MessageHandler{
     }
     
     public synchronized void removeOutputStream(User user){
-        outputStreams.remove(user);
+        if(user != null){
+            outputStreams.remove(user);
+        }
     }
 
     @Override
@@ -73,5 +85,41 @@ public class ServerHandler extends MessageHandler{
         if(user==null){
             displayType.display(new LocalMessage(message));
         }
+        else{
+            sendLocalMessageTo(new LocalMessage(message), user);
+        }
+    }
+    
+    private void sendLocalMessageTo(LocalMessage message, User user){
+        try {
+            outputStreams.get(user).writeObject(message);
+        } catch (IOException ex) {
+            sendLocalMessage("Could not send local message to ", null);
+        }
+    }
+    
+    public void sendComMessage(ComMessage message, User user){
+        if(user == null){
+            
+            broadcastAsSealedObject(message);
+            displayComMessage(message);
+        }
+        else{
+            
+        }
+    }
+    
+    private void broadcastAsSealedObject(AppMessage message){
+        Set<User> users = outputStreams.keySet();
+        User[] userA = (User[]) users.toArray();
+        User aUser;
+        for(int i = 0; i < users.size(); i++){
+            
+        }
+    }
+
+    @Override
+    public void displayComMessage(ComMessage comMessage) {
+        displayType.display(comMessage);
     }
 }

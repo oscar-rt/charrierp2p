@@ -30,6 +30,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.crypto.SealedObject;
 
 /**
  *
@@ -67,11 +70,23 @@ public class Listener extends Thread{
         
         if(running){
             InitProtocol initConnection = new InitProtocol(setupVariables.appVariables.user, false, inputStream, outputStream);
-            running = (initConnection.completed && !initConnection.failed);
+            if(initConnection.completed && !initConnection.failed){
+                handler.setServerOutputStream(outputStream);
+                running = true;
+            }
+            else{
+                running = false;
+            }
         }
         
         while(running){
-            
+            try {
+                handler.interpretMessage((SealedObject) inputStream.readObject());
+            } catch (IOException ex) {
+                Logger.getLogger(Listener.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Listener.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     

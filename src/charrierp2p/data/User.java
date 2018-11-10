@@ -23,17 +23,41 @@
  */
 package charrierp2p.data;
 
+import charrierp2p.messaging.AppMessage;
+import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SealedObject;
+
 /**
  *
  * @author Oscar
  */
 public class User {
     
-    String username;
-    String role;
+    public String username;
+    public String role;
+    public PublicKey publicKey;
     String textcolor;
     
     public User(String username){
         this.username = username;
+    }
+    
+    public SealedObject sealMessage(AppMessage appMessage){
+        try {
+            Cipher cipher = Cipher.getInstance("RSA");
+            cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+            return new SealedObject(appMessage, cipher);
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IOException | IllegalBlockSizeException ex) {
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }

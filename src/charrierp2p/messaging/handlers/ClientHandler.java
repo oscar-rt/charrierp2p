@@ -26,8 +26,11 @@ package charrierp2p.messaging.handlers;
 import charrierp2p.data.User;
 import charrierp2p.managers.ClientManager;
 import charrierp2p.messaging.MessageHandler;
+import charrierp2p.messaging.msg.ComMessage;
+import charrierp2p.messaging.msg.LocalMessage;
 import charrierp2p.setup.Setup;
 import java.io.ObjectOutputStream;
+import javax.crypto.SealedObject;
 
 /**
  *
@@ -50,14 +53,20 @@ public class ClientHandler extends MessageHandler{
 
     @Override
     public void sendLocalMessage(String message, User user) {
+            displayType.display(new LocalMessage(message));
         
     }
     
-    public void interpretMessage(){
+    public void interpretMessage(SealedObject sealedMessage){
         
     }
     
     public void setServerOutputStream(ObjectOutputStream outputStream){
         this.outputStream = outputStream;
+    }
+
+    @Override
+    public void displayComMessage(ComMessage comMessage) {
+        displayType.display(comMessage);
     }
 }

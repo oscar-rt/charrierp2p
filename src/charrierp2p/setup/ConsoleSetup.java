@@ -23,6 +23,7 @@
  */
 package charrierp2p.setup;
 
+import charrierp2p.data.User;
 import java.util.Scanner;
 
 /**
@@ -62,6 +63,9 @@ public class ConsoleSetup {
         //clear reference to input object so it can be freed
         input = null;
         System.out.println("\n");
+        //generate keypair
+        
+        
         return appVariables;
     }
 
@@ -79,7 +83,8 @@ public class ConsoleSetup {
         
         appVariables.port = Integer.parseInt(answer);
         
-        //GET USER PROFILE 
+        //SET USER PROFILE
+        setUserProfile(appVariables);
     }
     
     private static void getPortIPForClient(AppVariables appVariables) {
@@ -107,6 +112,19 @@ public class ConsoleSetup {
         }
         
         appVariables.port = Integer.parseInt(answer);
+        
+        //SET USER PROFILE
+        setUserProfile(appVariables);
+    }
+    
+    private static void setUserProfile(AppVariables appVariables){
+        System.out.print("Enter a username: ");
+        String answer = input.nextLine();
+        while(answer.length() > 15){
+            System.out.print("Your username can only be 15 characters or less, please enter another username: ");
+            answer = input.nextLine();
+        }
+        appVariables.user = new User(answer);
     }
         
     private static void printNoOptionTryAgain(String option, String availableOptions){    

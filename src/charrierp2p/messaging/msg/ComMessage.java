@@ -23,6 +23,7 @@
  */
 package charrierp2p.messaging.msg;
 
+import charrierp2p.data.Time;
 import charrierp2p.messaging.AppMessage;
 import charrierp2p.messaging.AppMessage.MessageTypes;
 /**
@@ -39,10 +40,12 @@ public class ComMessage extends AppMessage{
         this.messageType = MessageTypes.COMMUNICATION;
     }
     
-    public ComMessage(String messageBody){
+    public ComMessage(String messageBody, String username, String timeSent){
         super();
         this.messageType = MessageTypes.COMMUNICATION;
         this.messageBody = messageBody;
+        this.userPrint = username;
+        this.timeSent = Time.current64Time();
     }
 
     @Override

@@ -26,6 +26,7 @@ package charrierp2p.messaging;
 
 import charrierp2p.data.User;
 import charrierp2p.display.DisplayType;
+import charrierp2p.messaging.msg.ComMessage;
 import charrierp2p.setup.AppVariables;
 import charrierp2p.setup.Setup;
 import java.util.HashMap;
@@ -48,5 +49,6 @@ public abstract class MessageHandler {
     }
     
     public abstract void sendMessageFromConsole(String message);
+    public abstract void displayComMessage(ComMessage comMessage);
     public abstract void sendLocalMessage(String message, User user);
 }

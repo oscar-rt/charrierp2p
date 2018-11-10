@@ -24,6 +24,18 @@
 package charrierp2p.setup;
 
 import charrierp2p.data.User;
+import charrierp2p.messaging.AppMessage;
+import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.crypto.Cipher;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SealedObject;
 
 /**
  *
@@ -35,6 +47,7 @@ public class AppVariables {
     public String ipAddress;
     public int port;
     public User user;
+    private PrivateKey privateKey;
     
     public AppVariables(int test){
         IS_SERVER = true;
@@ -44,5 +57,37 @@ public class AppVariables {
         IS_SERVER = server;
     }
     
+    //declare Cypher, Init Crypto
+    public void initKeypair() throws NoSuchPaddingException{
+        try {
+            final int keySize = 2048;
+            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+            keyPairGenerator.initialize(keySize);
+            KeyPair keyPair = keyPairGenerator.genKeyPair();
+            
+            user.publicKey = keyPair.getPublic();
+            privateKey = keyPair.getPrivate();
+            
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(AppVariables.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
+    public AppMessage getSealedMessage(SealedObject sealedMessage){
+        try {
+            AppMessage message = (AppMessage) sealedMessage.getObject(privateKey);
+            
+            return message;
+            
+        } catch (IOException ex) {
+            Logger.getLogger(AppVariables.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AppVariables.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(AppVariables.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvalidKeyException ex) {
+            Logger.getLogger(AppVariables.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 }

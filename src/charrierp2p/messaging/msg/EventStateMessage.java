@@ -75,9 +75,4 @@ public class EventStateMessage extends AppMessage{
         return userData;
     }
     
-    public void testPrint(){
-        System.out.println("\n=======ESM!=======");
-        System.out.println("ES: " + eventString);
-        System.out.println("EI: " + eventInteger);
-    }
 }

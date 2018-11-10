@@ -55,7 +55,6 @@ public class ClientManager extends Thread{
         try {
             serverConnection = new Socket(appVariables.ipAddress, appVariables.port);
         } catch (IOException ex) {
-            ex.printStackTrace();
             serverConnection = null;
         }
         
